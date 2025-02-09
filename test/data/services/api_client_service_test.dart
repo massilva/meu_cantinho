@@ -15,7 +15,7 @@ void main() {
   });
 
   group('ApiBack4AppClientService :: fetchPlaces', () {
-    test('fetchPlaces deve retornar uma lista de PlaceModel vázia', () async {
+    test('Deve retornar uma lista de PlaceModel vázia', () async {
       when(() => storageService.fetchPlaces()).thenAnswer((_) async => []);
 
       final places = await storageService.fetchPlaces();
