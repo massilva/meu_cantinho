@@ -1,4 +1,4 @@
-package com.example.meu_cantinho
+package br.com.meu_cantinho
 
 import io.flutter.embedding.android.FlutterActivity
 
