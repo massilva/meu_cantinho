@@ -1,6 +1,5 @@
-import '../../utils/result.dart';
-import '../models/place_model.dart';
+import '../../utils/types.dart';
 
 abstract class PlaceRepository {
-  Future<Result<List<PlaceModel>>> fetchPlaces();
+  Future<ResultPlaceList> fetchPlaces();
 }

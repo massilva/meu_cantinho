@@ -1,13 +1,14 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 import '../../utils/strings/exceptions_string.dart';
+import '../../utils/types.dart';
 import '../models/place_model.dart';
 import '../models/place_save_model.dart';
 import '../repositories/services/storage_service.dart';
 
 class ApiBack4AppClientService implements StorageService {
   @override
-  Future<List<PlaceModel>> fetchPlaces() async {
+  Future<PlaceList> fetchPlaces() async {
     final query = QueryBuilder<ParseObject>(ParseObject('Place'));
     final response = await query.query();
 

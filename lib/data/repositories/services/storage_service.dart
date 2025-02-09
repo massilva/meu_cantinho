@@ -1,5 +1,5 @@
-import '../../models/place_model.dart';
+import '../../../utils/types.dart';
 
 abstract class StorageService {
-  Future<List<PlaceModel>> fetchPlaces();
+  Future<PlaceList> fetchPlaces();
 }

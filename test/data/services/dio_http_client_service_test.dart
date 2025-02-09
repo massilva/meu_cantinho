@@ -21,7 +21,7 @@ void main() {
   group('DioHttpClientService', () {
     const String testUrl = 'https://api.example.com/resource';
 
-    test('deve retornar Result.ok ao chamar GET com sucesso', () async {
+    test('Deve retornar Result.ok ao chamar GET com sucesso', () async {
       final mockResponse = MockResponse<Map<String, dynamic>>();
       when(() => mockResponse.data).thenReturn({'key': 'value'});
       when(() => mockResponse.statusCode).thenReturn(200);
@@ -33,7 +33,7 @@ void main() {
       expect((result as Ok).value, {'key': 'value'});
     });
 
-    test('deve retornar Result.error ao chamar GET e receber erro 404',
+    test('Deve retornar Result.error ao chamar GET e receber erro 404',
         () async {
       when(() => mockDio.get<Map<String, dynamic>>(testUrl)).thenThrow(
         DioException(
@@ -51,7 +51,7 @@ void main() {
       expect((result as Error).error, isA<Exception>());
     });
 
-    test('deve retornar Result.ok ao chamar POST com sucesso', () async {
+    test('Deve retornar Result.ok ao chamar POST com sucesso', () async {
       final mockResponse = MockResponse<Map<String, dynamic>>();
       when(() => mockResponse.data).thenReturn({'created': true});
       when(() => mockResponse.statusCode).thenReturn(201);
@@ -65,7 +65,7 @@ void main() {
       expect((result as Ok).value, {'created': true});
     });
 
-    test('deve retornar Result.error ao chamar POST e falhar', () async {
+    test('Deve retornar Result.error ao chamar POST e falhar', () async {
       when(() => mockDio.post<Map<String, dynamic>>(testUrl,
               data: any(named: 'data')))
           .thenThrow(DioException(
@@ -79,7 +79,7 @@ void main() {
       expect((result as Error).error, isA<Exception>());
     });
 
-    test('deve retornar Result.ok ao chamar DELETE com sucesso', () async {
+    test('Deve retornar Result.ok ao chamar DELETE com sucesso', () async {
       final mockResponse = MockResponse<void>();
       when(() => mockResponse.statusCode).thenReturn(204);
       when(() => mockDio.delete<void>(testUrl))
@@ -90,7 +90,7 @@ void main() {
       expect(result, isA<Ok<void>>());
     });
 
-    test('deve retornar Result.error ao chamar DELETE e falhar', () async {
+    test('Deve retornar Result.error ao chamar DELETE e falhar', () async {
       when(() => mockDio.delete<void>(testUrl)).thenThrow(DioException(
           requestOptions: RequestOptions(path: testUrl),
           type: DioExceptionType.unknown));

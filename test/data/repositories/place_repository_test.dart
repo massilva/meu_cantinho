@@ -5,6 +5,7 @@ import 'package:meu_cantinho/data/repositories/place_repository.dart';
 import 'package:meu_cantinho/data/repositories/place_repository_impl.dart';
 import 'package:meu_cantinho/data/repositories/services/storage_service.dart';
 import 'package:meu_cantinho/utils/result.dart';
+import 'package:meu_cantinho/utils/types.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockStorageService extends Mock implements StorageService {}
@@ -26,7 +27,7 @@ void main() {
       when(() => storageService.fetchPlaces()).thenAnswer((_) async => []);
 
       final places = await placeRepository.fetchPlaces();
-      expect(places, isA<Ok<List<PlaceModel>>>());
+      expect(places, isA<Ok<PlaceList>>());
       expect((places as Ok).value, isEmpty);
     });
 
@@ -49,8 +50,8 @@ void main() {
           ]);
 
       final places = await placeRepository.fetchPlaces();
-      expect(places, isA<Ok<List<PlaceModel>>>());
-      final placeOk = places as Ok<List<PlaceModel>>;
+      expect(places, isA<Ok<PlaceList>>());
+      final placeOk = places as Ok<PlaceList>;
       expect(placeOk.value, isNotEmpty);
       expect(placeOk.value.length, 2);
       final firstPlace = placeOk.value.first;
@@ -65,8 +66,8 @@ void main() {
           .thenThrow(Exception('Fora do ar'));
 
       final places = await placeRepository.fetchPlaces();
-      expect(places, isA<Error<List<PlaceModel>>>());
-      final placeError = places as Error<List<PlaceModel>>;
+      expect(places, isA<Error<PlaceList>>());
+      final placeError = places as Error<PlaceList>;
       expect(placeError.error, isA<FetchPlaceException>());
     });
   });

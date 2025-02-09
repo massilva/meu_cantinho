@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:meu_cantinho/data/models/place_model.dart';
 import 'package:meu_cantinho/data/models/place_save_model.dart';
 import 'package:meu_cantinho/data/services/api_back4app_client_service.dart';
+import 'package:meu_cantinho/utils/types.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockApiBack4AppClientService extends Mock
@@ -19,7 +20,7 @@ void main() {
       when(() => storageService.fetchPlaces()).thenAnswer((_) async => []);
 
       final places = await storageService.fetchPlaces();
-      expect(places, isA<List<PlaceModel>>());
+      expect(places, isA<PlaceList>());
       expect(places, isEmpty);
     });
 
@@ -44,7 +45,7 @@ void main() {
           .thenAnswer((_) async => mockPlaces);
 
       final places = await storageService.fetchPlaces();
-      expect(places, isA<List<PlaceModel>>());
+      expect(places, isA<PlaceList>());
       expect(places.length, 2);
       expect(places.first, firstPlace);
     });
@@ -85,7 +86,7 @@ void main() {
           .thenAnswer((_) async => mockPlaces);
 
       final places = await storageService.fetchPlaces();
-      expect(places, isA<List<PlaceModel>>());
+      expect(places, isA<PlaceList>());
       expect(places.length, 1);
       expect(places.first, mockPlaces.first);
     });
