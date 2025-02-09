@@ -20,7 +20,7 @@ PlaceModel _$PlaceModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PlaceModel {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   double get rating => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $PlaceModelCopyWith<$Res> {
           PlaceModel value, $Res Function(PlaceModel) then) =
       _$PlaceModelCopyWithImpl<$Res, PlaceModel>;
   @useResult
-  $Res call({String id, String name, String description, double rating});
+  $Res call({int id, String name, String description, double rating});
 }
 
 /// @nodoc
@@ -68,7 +68,7 @@ class _$PlaceModelCopyWithImpl<$Res, $Val extends PlaceModel>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -93,7 +93,7 @@ abstract class _$$PlaceModelImplCopyWith<$Res>
       __$$PlaceModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String description, double rating});
+  $Res call({int id, String name, String description, double rating});
 }
 
 /// @nodoc
@@ -118,7 +118,7 @@ class __$$PlaceModelImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -148,7 +148,7 @@ class _$PlaceModelImpl implements _PlaceModel {
       _$$PlaceModelImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String name;
   @override
@@ -195,7 +195,7 @@ class _$PlaceModelImpl implements _PlaceModel {
 
 abstract class _PlaceModel implements PlaceModel {
   const factory _PlaceModel(
-      {required final String id,
+      {required final int id,
       required final String name,
       required final String description,
       required final double rating}) = _$PlaceModelImpl;
@@ -204,7 +204,7 @@ abstract class _PlaceModel implements PlaceModel {
       _$PlaceModelImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get name;
   @override
