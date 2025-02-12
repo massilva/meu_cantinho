@@ -4,7 +4,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:meu_cantinho/ui/controllers/home_controller.dart';
 import 'package:meu_cantinho/data/repositories/place_repository.dart';
 import 'package:meu_cantinho/utils/result.dart';
-import 'package:meu_cantinho/data/models/place_model.dart';
+
+import '../../../testing/fake_storage.dart';
 
 class MockPlaceRepository extends Mock implements PlaceRepository {}
 
@@ -31,19 +32,11 @@ void main() {
     });
 
     test('Deve listar locais salvos', () async {
-      final placeList = [
-        PlaceModel(
-          id: 1,
-          name: 'Place 1',
-          description: 'Description',
-          rating: 4.5,
-        ),
-      ];
       when(() => mockPlaceRepository.fetchPlaces())
-          .thenAnswer((_) async => Result.ok(placeList));
+          .thenAnswer((_) async => Result.ok(fakeStorage));
 
       await homeController.getPlaces.execute();
-      expect(homeController.places, equals(placeList));
+      expect(homeController.places, equals(fakeStorage));
     });
 
     test('Deve retornar uma lsita vázia após o erro', () async {

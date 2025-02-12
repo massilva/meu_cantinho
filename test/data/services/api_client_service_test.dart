@@ -5,6 +5,8 @@ import 'package:meu_cantinho/data/services/api_back4app_client_service.dart';
 import 'package:meu_cantinho/utils/types.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../../testing/fake_storage.dart';
+
 class MockApiBack4AppClientService extends Mock
     implements ApiBack4AppClientService {}
 
@@ -25,24 +27,10 @@ void main() {
     });
 
     test('Deve retornar uma lista com dados quando houver registros', () async {
-      final firstPlace = PlaceModel(
-        id: 1,
-        name: 'Praia Azul',
-        description: 'Ótima praia',
-        rating: 4.5,
-      );
-      final mockPlaces = [
-        firstPlace,
-        PlaceModel(
-          id: 2,
-          name: 'Parque Verde',
-          description: 'Ótimo para caminhar',
-          rating: 5,
-        ),
-      ];
+      final firstPlace = fakeStorage.first;
 
       when(() => storageService.fetchPlaces())
-          .thenAnswer((_) async => mockPlaces);
+          .thenAnswer((_) async => fakeStorage);
 
       final places = await storageService.fetchPlaces();
       expect(places, isA<PlaceList>());
@@ -60,7 +48,6 @@ void main() {
 
   group('ApiBack4AppClientService :: savePlace', () {
     test('Deve retornar um PlaceModel', () async {
-      final mockPlaces = <PlaceModel>[];
       final place = PlaceSaveModel(
         name: 'Praia Azul',
         description: 'Ótima praia',
@@ -68,13 +55,14 @@ void main() {
       );
 
       when(() => storageService.savePlace(place)).thenAnswer((_) async {
-        final mockPlace = PlaceModel(
-          id: 1,
-          name: place.name,
-          description: place.description,
-          rating: place.rating,
+        fakeStorage.add(
+          PlaceModel(
+            id: 1,
+            name: place.name,
+            description: place.description,
+            rating: place.rating,
+          ),
         );
-        mockPlaces.add(mockPlace);
         return true;
       });
 
@@ -83,12 +71,12 @@ void main() {
       expect(savedPlace, true);
 
       when(() => storageService.fetchPlaces())
-          .thenAnswer((_) async => mockPlaces);
+          .thenAnswer((_) async => fakeStorage);
 
       final places = await storageService.fetchPlaces();
       expect(places, isA<PlaceList>());
-      expect(places.length, 1);
-      expect(places.first, mockPlaces.first);
+      expect(places.length, fakeStorage.length);
+      expect(places.first, fakeStorage.first);
     });
 
     test('Deve lançar uma exceção quando a API falhar', () async {

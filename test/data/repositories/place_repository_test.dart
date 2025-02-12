@@ -1,12 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meu_cantinho/core/exceptions/fetch_place_exception.dart';
-import 'package:meu_cantinho/data/models/place_model.dart';
 import 'package:meu_cantinho/data/repositories/place_repository.dart';
 import 'package:meu_cantinho/data/repositories/place_repository_impl.dart';
 import 'package:meu_cantinho/data/repositories/services/storage_service.dart';
 import 'package:meu_cantinho/utils/result.dart';
 import 'package:meu_cantinho/utils/types.dart';
 import 'package:mocktail/mocktail.dart';
+
+import '../../../testing/fake_storage.dart';
 
 class MockStorageService extends Mock implements StorageService {}
 
@@ -34,20 +35,8 @@ void main() {
     test(
         'Deve retornar o Result.Ok com a lista com dados quando houver registro',
         () async {
-      when(() => storageService.fetchPlaces()).thenAnswer((_) async => [
-            PlaceModel(
-              id: 1,
-              name: 'Praia Azul',
-              description: 'Ótima praia',
-              rating: 4.5,
-            ),
-            PlaceModel(
-              id: 2,
-              name: 'Parque Verde',
-              description: 'Ótimo para caminhar',
-              rating: 5,
-            ),
-          ]);
+      when(() => storageService.fetchPlaces())
+          .thenAnswer((_) async => fakeStorage);
 
       final places = await placeRepository.fetchPlaces();
       expect(places, isA<Ok<PlaceList>>());
@@ -58,7 +47,7 @@ void main() {
       expect(firstPlace.id, 1);
       expect(firstPlace.name, 'Praia Azul');
       expect(firstPlace.description, 'Ótima praia');
-      expect(firstPlace.rating, 4.5);
+      expect(firstPlace.rating, 5.0);
     });
 
     test('Deve lançar uma exceção quando a API falha', () async {
